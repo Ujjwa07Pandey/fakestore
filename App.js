@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from './redux/reducers/reducers';
-import {AppNavigator}  from './components/navigation/appNavigator';
+import AppNavigator  from './components/navigation/appNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 const middleware = applyMiddleware(thunkMiddleware);
 const store = createStore(rootReducer, middleware);

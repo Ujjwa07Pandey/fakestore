@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { colors } from "../../styles/colors";
-import { addToCart, fetchProducts } from "../../redux/actions/actions";
+import { addToCart , fetchProducts } from "../../redux/actions/actions";
 import { bindActionCreators } from "redux";
 import ProductCard from "../reusable/ProductCard";
 
@@ -16,7 +16,7 @@ function HomeScreen(props) {
   const [isLoading, setLoading] = useState(false);
 
   const data = props.fetchProducts().payload;
-
+  // console.log(data);
   return (
     <View style={styles.container}>
       {isLoading ? (
@@ -25,7 +25,7 @@ function HomeScreen(props) {
         <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
-          renderItem={({ item }) => <ProductCard item={item}/>}
+          renderItem={({ item }) => <ProductCard item={item} addToCart={() => {props.addToCart(item)}}/>}
         />
       )}
     </View>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
 });
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ fetchProducts }, dispatch);
+  return bindActionCreators({addToCart ,  fetchProducts }, dispatch);
 };
 const mapStateToProps = (state) => {
   return {

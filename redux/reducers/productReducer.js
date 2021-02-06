@@ -5,7 +5,7 @@ const initialState = {
 export default function ProductReducer(state = initialState, action) {
     switch(action.type){
         case FETCH_PRODUCTS:
-            return state
+            return state;
         default:
             return state;
     }

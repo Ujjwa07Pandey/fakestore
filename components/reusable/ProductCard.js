@@ -1,49 +1,52 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity , Card } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Card, Button } from "react-native-elements";
 
-export default function ProductCard({ item }) {
+export default function ProductCard({ item, addToCart }) {
   return (
-    <TouchableOpacity style={styles.container}>
-        <View style={styles.image}>
-           <Image
-        style={styles.image}
+    <Card>
+      <Image
+        style={styles.tinyLogo}
         source={{
           uri: item.image,
         }}
       />
-      <Text>{item.title}</Text>
-      </View>
-    
-      <View style={styles.card}>
-      
-     
-        
-      </View>
-    </TouchableOpacity>
+
+      <Text style={{ marginBottom: 10, marginTop: 20 }} h2>
+        {item.title}
+      </Text>
+
+      <Text style={styles.price} h4>
+        {item.price}
+      </Text>
+
+      <Text h6 style={styles.description}>
+        {item.description}
+      </Text>
+
+      <Button type="clear" title="Add To Cart" onPress={() => addToCart(item)} />
+    </Card>
   );
 }
 
 const styles = StyleSheet.create({
+  name: {
+    color: "#5a647d",
 
-    container:{
-        flex:1,
-        justifyContent:'center',
-    },
-    card:{
-        alignItems:'center',
-        textAlign:'center',
-        width:'90%',
-        height:300,
-        backgroundColor:'#fff',
-        marginVertical:20,
-        borderColor:'#ccc',
-        borderRadius:8,
-        elevation:1,
-        shadowOpacity:1,
-        shadowColor:'#ccc'
-    },
-    image:{
-        height:200
-    }
+    fontWeight: "bold",
 
+    fontSize: 30,
+  },
+
+  price: {
+    fontWeight: "bold",
+
+    marginBottom: 10,
+  },
+
+  description: {
+    fontSize: 10,
+
+    color: "#c1c4cd",
+  },
 });

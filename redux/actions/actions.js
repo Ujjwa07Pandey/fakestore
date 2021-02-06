@@ -1,4 +1,4 @@
-import React,{useState , useEffect} from 'react';
+import React , {useState , useEffect} from 'react';
 import Firebase, {db} from '../../config/firebase';
 
 /************************
@@ -81,6 +81,7 @@ export const getUser = uid => {
 ************************/
 
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
+export const VIEW_CART = 'VIEW_CART';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const ADD_ORDER = 'ADD_ORDER';
@@ -97,6 +98,7 @@ export const fetchProducts = () =>   {
         fetch(apiEndPoint).then((res) =>  res.json()
         ).then(result => {
             setItems(result);
+            
         }).catch((err) => {
             setIsLoaded(true);
             setError(err)
@@ -111,7 +113,8 @@ export const fetchProducts = () =>   {
        
     
 }
-export const addToCart = item => dispatch => {
+
+export const addToCart = (item) => dispatch => {
     dispatch({
         type: ADD_TO_CART,
         payload: item
