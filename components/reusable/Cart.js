@@ -7,60 +7,54 @@ import {
   Animated,
   FlatList,
   ActivityIndicator,
+  Image,
+  Button
 } from "react-native";
-import { useSelector } from 'react-redux';
+
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addToCart , removeItem } from './../../redux/actions/actions';
+
+import CartCard from './CartCard';
+import { colors } from "../../styles/colors";
 function Cart(props) {
   const [isLoading, setLoading] = useState(false);
   const data = props.cart;
-  console.log(data);
-
+  var total = props.total;
+  if(props.cart.length == 0){
+    total = 0;
+  }
+  
   return (
     <View style={styles.container}>
+     
       {isLoading ? (
         <ActivityIndicator />
       ) : (
+        <View>
+         
+          <Button title="Continue" onPress={() => props.navigation.navigate('Checkout', {
+              paramKey: total ,
+            })}/>
         <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
-          renderItem={({ item }) =>  <Card>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri: item.image,
-            }}
-          />
-    
-          <Text style={{ marginBottom: 10, marginTop: 20 }} h2>
-            {item.title}
-          </Text>
-    
-          <Text style={styles.price} h4>
-            {item.price}
-          </Text>
-    
-          <Text h6 style={styles.description}>
-            {item.description}
-          </Text>
-    
-          <Button type="clear" title="Add To Cart" onPress={addToCart(item)} 
-          />
-           <Button type="clear" title="Remove from Cart" onPress={removeItem(item)} 
-          />
-        </Card>}
+          renderItem={({ item }) =>  <CartCard item={item} addToCart={() => {props.addToCart(item)}} removeItem={() =>{props.removeItem(item)} }/>}
         />
+        </View>
       )}
+      
     </View>
   );
 }
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({addToCart , removeItem}, dispatch);
-  };
+  return bindActionCreators({addToCart ,  removeItem }, dispatch);
+};
   const mapStateToProps = (state) => {
     return {
       cart: state.CartReducer.cart,
+      total:state.CartReducer.total
+      
     };
   };
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);
@@ -68,11 +62,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    paddingHorizontal: 50,
+    backgroundColor: colors.skyblue,
   },
-  cart: {
-    color: "white",
-    fontSize: 14,
+  body: {
+    flex: 1,
+    justifyContent: "center",
   },
 });
 

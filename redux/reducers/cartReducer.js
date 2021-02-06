@@ -12,7 +12,7 @@ export default function CartReducer(state = initialState, action) {
             return {
                 ...state,
                 cart: [action.payload, ...state.cart],
-                total: state.total 
+                total: state.total + action.payload.price
             }
         case EMPTY_CART:
             return {
@@ -20,12 +20,12 @@ export default function CartReducer(state = initialState, action) {
                 cart: [],
                 total: 0
             }
-        case REMOVE_FROM_CART:
-            return {
-                ...state,
-                cart: state.cart.filter((item, i) => i !== action.payload.index),
-                total: state.total
-            }
+            case REMOVE_FROM_CART:
+                return {
+                    ...state,
+                    cart: state.cart.filter((item) => item !== action.payload),
+                    total: state.total - action.payload.price
+                }
         default:
             return state
     }

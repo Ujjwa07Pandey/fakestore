@@ -2,17 +2,15 @@ import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Card, Button } from "react-native-elements";
 
-export default function ProductCard({ item, addToCart }) {
+export default function CartCard({ item, addToCart  , removeItem}) {
   return (
-    <Card
-    image={{uri: item.image}}
-    imageStyle={{
-      width: '200px',
-      height: '200px',
-     resizeMode: 'cover'
-    }}
-    >
-      
+    <Card>
+      <Image
+        style={styles.tinyLogo}
+        source={{
+          uri: item.image,
+        }}
+      />
 
       <Text style={{ marginBottom: 10, marginTop: 20 }} h2>
         {item.title}
@@ -27,6 +25,7 @@ export default function ProductCard({ item, addToCart }) {
       </Text>
 
       <Button type="clear" title="Add To Cart" onPress={() => addToCart(item)} />
+      <Button type="clear" title="Remove from cart" onPress={() => removeItem(item)} />
     </Card>
   );
 }
